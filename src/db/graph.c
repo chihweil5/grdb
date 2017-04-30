@@ -21,12 +21,18 @@ graph_insert_vertex(graph_t g, vertex_t v)
 	if (g->v == NULL) {
 		/* Insert vertex into empty graph */
 		g->v = v;
+
+		/* set the endpoint */
+		g->v->next = NULL;
 		return;
 	}
 	/* Insert at the end of the double linked list */
 	for (w = g->v; w->next != NULL; w = w->next);
 	w->next = v;
 	v->prev = w;
+
+	/* set the endpoint */
+	v->next = NULL;
 }
 
 vertex_t
@@ -35,10 +41,11 @@ graph_find_vertex_by_id(graph_t g, vertexid_t id)
 	vertex_t v;
 
 	assert (g != NULL);
-
-	for (v = g->v; v != NULL; v = v->next)
-		if (v->id == id)
+	for (v = g->v; v != NULL; v = v->next){
+		if (v->id == id){
 			return v;
+		}
+	}
 
 	return NULL;
 }
@@ -65,12 +72,17 @@ graph_insert_edge(graph_t g, edge_t e)
 	if (g->e == NULL) {
 		/* Insert edge into empty graph edge set */
 		g->e = e;
+
+		/* set the endpoint */
+		g->e->next = NULL;
 		return;
 	}
 	/* Insert at the end of the double linked list */
 	for (f = g->e; f->next != NULL; f = f->next);
 	f->next = e;
 	e->prev = f;
+	/* set the endpoint */
+	f->next->next = NULL;
 }
 
 void

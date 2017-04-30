@@ -5,6 +5,9 @@
 #include <string.h>
 #include "cli.h"
 #include "graph.h"
+#include "conv.h"
+#include "stack.h"
+
 
 void cli_graph_new(char *cmdline, int *pos);
 void cli_graph_edge(char *cmdline, int *pos);
@@ -63,4 +66,10 @@ cli_graph(char *cmdline, int *pos)
 
 	} else if (strlen(s) == 0)
 		cli_graph_print();
+
+	/* project code here */
+	else if (strcmp(s, "stk") == 0) {
+		convert_normal_form(graphs);
+
+	}
 }

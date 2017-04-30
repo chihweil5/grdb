@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "cli.h"
 #include "graph.h"
+#include "conv.h"
 
 /* Graphs */
 graph_t graphs = NULL;
@@ -116,7 +117,8 @@ cli()
 			   strcmp(cmd, "g") == 0) {
 			cli_graph(cmdline, &pos);
 			continue;
-		}
+		} 
+
 	}
 }
 

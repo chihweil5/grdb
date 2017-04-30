@@ -67,11 +67,13 @@ schema_attribute_insert(schema_t s, attribute_t attr)
 	assert (attr != NULL);
 
 	if (s->attrlist == NULL) {
-		s->attrlist = attr;
+		s->attrlist = attr;;
+		s->attrlist->next = NULL;
 		return;
 	}
 	for (t = s->attrlist; t->next != NULL; t = t->next);
 	t->next = attr;
+	t -> next -> next = NULL;
 }
 
 void

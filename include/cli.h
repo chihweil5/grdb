@@ -2,6 +2,7 @@
 #define __CLI_GRAPH_H
 
 #include "graph.h"
+#include "conv.h"
 
 #define PROMPT		"grdb> "
 #define BUFSIZE		4096
