@@ -92,7 +92,7 @@ attrBuf_pt get_attribute(tuple_t t){
 }
 
 int find_common_schema(attrBuf_pt target1, attrBuf_pt target2){
-	printf("in find_common_schema... \n");
+	//printf("in find_common_schema... \n");
 	int i,j,commonNum = 0;
 	attribute_t *target1_attrList = target1 -> attrbuf;
 	attribute_t *target2_attrList = target2 -> attrbuf; //attribute list of top vertex
@@ -105,12 +105,12 @@ int find_common_schema(attrBuf_pt target1, attrBuf_pt target2){
 			
 		}
 	}
-	printf("return number of common attribute:%d\n", commonNum);
+	//printf("return number of common attribute:%d\n", commonNum);
 	return commonNum;
 }
 
 void change_common_schema(attrBuf_pt target1, attrBuf_pt target2, schema_t *common_schema){
-	printf("in change_common_schema... \n");
+	//printf("in change_common_schema... \n");
 	int i,j,commonNum = 0;
 	attribute_t *target1_attrList = target1 -> attrbuf;
 	attribute_t *target2_attrList = target2 -> attrbuf; //attribute list of top vertex
@@ -127,7 +127,7 @@ void change_common_schema(attrBuf_pt target1, attrBuf_pt target2, schema_t *comm
 		}
 	}
 
-	printf("finished changing schema\n");
+	//printf("finished changing schema\n");
 }
 
 int has_common_schema(schema_t s, attrBuf_pt node_att){
@@ -192,9 +192,9 @@ int find_largest_common_sv(graph_t cst, stack_pt s, vertex_t target, schema_t ma
 	/*tuple_t t = target->tuple;
 	attrBuf_pt tgtAttr = get_attribute(t);*/
 
-	attribute_t *target_attrList = tgtAttr -> attrbuf;
-	int i;
-
+	//attribute_t *target_attrList = tgtAttr -> attrbuf;
+	//int i;
+/*
 	printf("in find_largest_common_sv funciton: attrbute number -> %d\n", tgtAttr->num);
 
 	for(i = 0; i < tgtAttr->num; i++){
@@ -202,22 +202,18 @@ int find_largest_common_sv(graph_t cst, stack_pt s, vertex_t target, schema_t ma
 		schema_attribute_print(target_attrList[i]);
 		printf("\n");
 	}
-
+*/
 	//get neighbor nodes
 
 	vertex_t top_vertex = peek(s);
 	int v_large_schema = top_vertex->id;
-	vertex_print(top_vertex);
 	pop(s);
 	attrBuf_pt top_att = get_attribute(top_vertex->tuple);
 
-	/*schema_t max_common_schema = NULL;
-	schema_init(&max_common_schema);
-	max_common_schema->attrlist = NULL;*/
 
 	int count = find_common_schema(tgtAttr, top_att);
 	change_common_schema(tgtAttr, top_att, &max_common_schema);
-	printf("in find_largest_common_sv funciton: get common schema number:%d\n", count);
+	//printf("in find_largest_common_sv funciton: get common schema number:%d\n", count);
 
 	//schema_print(max_common_schema);
 
@@ -231,32 +227,18 @@ int find_largest_common_sv(graph_t cst, stack_pt s, vertex_t target, schema_t ma
 			v_large_schema = tmp_vertex->id;
 		}
 	}
-	printf("in find_largest_common_sv funciton: ");
+	/*printf("in find_largest_common_sv funciton: ");
 	schema_print(max_common_schema);
-	printf("\n");
+	printf("\n");*/
 	return v_large_schema;
 	
-	/*setup graph
-	
-	vertex_t v;
-	v = (vertex_t) malloc(sizeof(struct vertex));
-   	assert (v != NULL);
-   	vertex_init(v);
-   	v->id = target->id;
-   	graph_insert_vertex(cst, v);
-
-   	edge_t e = (edge_t) malloc(sizeof(struct edge));
-	edge_init(e);
-	edge_set_vertices(e, v->id, v_large_schema);
-
-	cst->sv = max_common_schema;*/
 }
 
 void cst_grow(graph_t g, schema_t common_schema, graph_t cst){
-	graph_print(g, 0);
+	/*graph_print(g, 0);
 	printf("check common schema:\n");
 	schema_print(common_schema);
-	printf("\n");
+	printf("\n");*/
 
 	edge_t edge;
 	vertex_t node2;
@@ -268,19 +250,19 @@ void cst_grow(graph_t g, schema_t common_schema, graph_t cst){
 
 	while(!isempty(s)){
 		vertex_t node = peek(s);
-		printf("stack[%d] has id: %llu nodes\n",s->top, node->id);
+		//printf("stack[%d] has id: %llu nodes\n",s->top, node->id);
 		pop(s);
 		//graph_print(g, 0);
 		//find neighbors with large common schema
 		for (edge = g->e; edge != NULL; edge = edge->next){
 			if(edge->id1 == node->id){
-				printf("\nid: %llu\n", edge->id2);
+				/*printf("\nid: %llu\n", edge->id2);
 				graph_print(g, 0);
-				printf("\n");
+				printf("\n");*/
 				node2 = graph_find_vertex_by_id(g, edge->id2);
 				attrBuf_pt node_att = get_attribute(node2->tuple);
 				int hasCommon = has_common_schema(common_schema, node_att);
-				printf("has Common schema :%d\n", hasCommon);
+				//printf("has Common schema :%d\n", hasCommon);
 
 				//find the node that has common schema
 				if(hasCommon && !isExist(node2, s)){
@@ -300,7 +282,7 @@ void cst_grow(graph_t g, schema_t common_schema, graph_t cst){
 				}
 			}
 		}
-		printf("stack has %d nodes\n", s->top+1 );
+		//printf("stack has %d nodes\n", s->top+1 );
 	}
 
 	/*remove attribute from schema*/
@@ -310,9 +292,9 @@ void cst_grow(graph_t g, schema_t common_schema, graph_t cst){
 		schema_attribute_remove(g->sv, attr_remove);
 	}
 
-	printf("removing attributes after growing cst\n");
+	/*printf("removing attributes after growing cst\n");
 	schema_print(g->sv);
-	printf("\n");
+	printf("\n");*/
 }
 
 
@@ -320,27 +302,48 @@ void convert_normal_form(graph_t g){
 	vertex_t v = g->v;
 	stack_pt stk = get_neighbors(g, v);
 
-	vertex_t *stack = stk->s;
+	/*vertex_t *stack = stk->s;
 	int i;
 	for ( i = 0; i <= stk->top; i++ ) {
       printf( "stack[%d] : %llu\n", i, stack[i]->id);
-    }
+    }*/
 
-    /* one cst
+    // one cst
 	graph_t cst = (graph_t) malloc(sizeof(struct graph));
 
 	schema_t max_common_schema = NULL;
 	schema_init(&max_common_schema);
 	max_common_schema->attrlist = NULL;
 
-    find_largest_common_sv(cst, stk, v, max_common_schema);
-    printf("normal form:\n");
+	tuple_t t = v->tuple;
+	attrBuf_pt tgtAttr = get_attribute(t);
+
+    int vid_large_schema = find_largest_common_sv(cst, stk, v, max_common_schema, tgtAttr);
+    
+	//set up cst graph
+	vertex_t newv;
+	newv = (vertex_t) malloc(sizeof(struct vertex));
+   	assert (newv != NULL);
+   	vertex_init(newv);
+   	newv->id = v->id;
+   	graph_insert_vertex(cst, newv);
+
+   	edge_t e = (edge_t) malloc(sizeof(struct edge));
+	edge_init(e);
+	edge_set_vertices(e, newv->id, vid_large_schema);
+
+	cst->sv = max_common_schema;
 
     cst_grow(g, max_common_schema, cst);
+
+
+    printf("normal form:\n");
     graph_print(cst, 0);
 
     printf("\n");
-	*/
+	
+
+	/*
     graph_t *cst = (graph_t *) malloc(sizeof(struct graph) * MAX);
     for(i = 0; i < MAX; i++){
     	cst[i] = (graph_t) malloc(sizeof(struct graph));
@@ -389,7 +392,7 @@ void convert_normal_form(graph_t g){
 
 	    printf("\n");
 	    cstNum++;
-    }
+    }*/
     
 }
 

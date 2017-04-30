@@ -68,7 +68,7 @@ cli_graph(char *cmdline, int *pos)
 		cli_graph_print();
 
 	/* project code here */
-	else if (strcmp(s, "stk") == 0) {
+	else if (strcmp(s, "conv") == 0) {
 		convert_normal_form(graphs);
 
 	}
